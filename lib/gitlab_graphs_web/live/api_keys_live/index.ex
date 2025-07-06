@@ -1,5 +1,4 @@
 defmodule GitlabGraphsWeb.ApiKeysLive.Index do
-  alias Swoosh.ApiClient
   use GitlabGraphsWeb, :live_view
 
   alias GitlabGraphs.Gitlab
@@ -7,39 +6,39 @@ defmodule GitlabGraphsWeb.ApiKeysLive.Index do
   @impl true
   def render(assigns) do
     ~H"""
-    <Layouts.app flash={@flash} current_scope={@current_scope}>
-      <.header>
-        Listing Api Keys
-        <:actions>
-          <.button variant="primary" navigate={~p"/api_keys/new"}>
-            <.icon name="hero-plus" /> New Api Key
-          </.button>
-        </:actions>
-      </.header>
+    <Layouts.flash_group flash={@flash} />
 
-      <.table
-        id="api_keys"
-        rows={@streams.api_keys}
-        row_click={fn {_id, api_key} -> JS.navigate(~p"/api_keys/#{api_key}") end}
-      >
-        <:col :let={{_id, api_key}} label="Name">{api_key.name}</:col>
-        <:col :let={{_id, api_key}} label="Key">{api_key.key}</:col>
-        <:action :let={{_id, api_key}}>
-          <div class="sr-only">
-            <.link navigate={~p"/api_keys/#{api_key}"}>Show</.link>
-          </div>
-          <.link navigate={~p"/api_keys/#{api_key}/edit"}>Edit</.link>
-        </:action>
-        <:action :let={{id, api_key}}>
-          <.link
-            phx-click={JS.push("delete", value: %{id: api_key.id}) |> hide("##{id}")}
-            data-confirm="Are you sure?"
-          >
-            Delete
-          </.link>
-        </:action>
-      </.table>
-    </Layouts.app>
+    <.header>
+      Listing Api Keys
+      <:actions>
+        <.button variant="primary" navigate={~p"/api_keys/new"}>
+          <.icon name="hero-plus" /> New Api Key
+        </.button>
+      </:actions>
+    </.header>
+
+    <.table
+      id="api_keys"
+      rows={@streams.api_keys}
+      row_click={fn {_id, api_key} -> JS.navigate(~p"/api_keys/#{api_key}") end}
+    >
+      <:col :let={{_id, api_key}} label="Name">{api_key.name}</:col>
+      <:col :let={{_id, api_key}} label="Key">{api_key.key}</:col>
+      <:action :let={{_id, api_key}}>
+        <div class="sr-only">
+          <.link navigate={~p"/api_keys/#{api_key}"}>Show</.link>
+        </div>
+        <.link navigate={~p"/api_keys/#{api_key}/edit"}>Edit</.link>
+      </:action>
+      <:action :let={{id, api_key}}>
+        <.link
+          phx-click={JS.push("delete", value: %{id: api_key.id}) |> hide("##{id}")}
+          data-confirm="Are you sure?"
+        >
+          Delete
+        </.link>
+      </:action>
+    </.table>
     """
   end
 

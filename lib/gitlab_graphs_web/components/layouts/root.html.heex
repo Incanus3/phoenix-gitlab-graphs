@@ -37,7 +37,8 @@
 
   <body class="flex flex-col size-full">
     <div class={[
-      "flex flex-row flex-wrap w-full justify-between items-center px-4 sm:px-6 lg:px-8",
+      "w-full bg-base-200 px-4 sm:px-6 lg:px-8",
+      "flex flex-row flex-wrap justify-between items-center",
       "border-1 border-transparent border-b-(--color-base-300)"
     ]}>
       <h1 class="hidden md:inline flex items-center text-sm font-semibold leading-6">
@@ -66,14 +67,28 @@
     <div class="size-full">
       <%= if @current_scope do %>
         <div class="flex flex-row size-full">
-          <div class={[
+          <ul class={[
             "h-full border-1 border-transparent border-r-(--color-base-300)",
-            "px-4 py-4 sm:px-6 sm:py-6 lg:px-8 lg:py-8"
+            "px-4 py-4 sm:px-6 sm:py-6 lg:px-8 lg:py-8",
+            "menu bg-base-200 w-56"
           ]}>
-            <h1 class="text-sm font-semibold leading-6">
-              Tady bude navigation menu
-            </h1>
-          </div>
+            <li>
+              <.my_link navigate={~p"/"} current_path={@request_path}>Home</.my_link>
+            </li>
+            <li>
+              <.my_link navigate={~p"/api_keys"} current_path={@request_path}>Api keys</.my_link>
+            </li>
+            <li>
+              <!-- <details open> -->
+              <details>
+                <summary>Graphs</summary>
+                <ul>
+                  <li><a>Commits</a></li>
+                  <li><a>Jobs</a></li>
+                </ul>
+              </details>
+            </li>
+          </ul>
 
           <div class="flex-1 px-4 py-4 sm:px-6 sm:py-6 lg:px-8 lg:py-8">
             {@inner_content}

@@ -19,7 +19,7 @@ defmodule GitlabGraphsWeb.Layouts do
       <Layouts.app flash={@flash}>
         <h1>Content</h1>
       </Layout.app>
-      
+
   """
   attr :flash, :map, required: true, doc: "the map of flash messages"
 
@@ -142,6 +142,25 @@ defmodule GitlabGraphsWeb.Layouts do
         <.icon name="hero-moon-micro" class="size-4 opacity-75 hover:opacity-100" />
       </button>
     </div>
+    """
+  end
+
+  attr :current_path, :string, required: true
+  attr :rest, :global, include: ~w(href navigate patch method)
+  slot :inner_block, required: true
+
+  def my_link(assigns) do
+    assigns =
+      assign(
+        assigns,
+        :path,
+        assigns.rest[:href] || assigns.rest[:navigate] || assigns.rest[:patch]
+      )
+
+    ~H"""
+    <.link class={[@path == @current_path && "menu-active"]} {@rest}>
+      {render_slot(@inner_block)}
+    </.link>
     """
   end
 end

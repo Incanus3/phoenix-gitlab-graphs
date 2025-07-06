@@ -6,21 +6,21 @@ defmodule GitlabGraphsWeb.ApiKeysLive.Form do
   @impl true
   def render(assigns) do
     ~H"""
-    <Layouts.app flash={@flash} current_scope={@current_scope}>
-      <.header>
-        {@page_title}
-        <:subtitle>Use this form to manage api key records in your database.</:subtitle>
-      </.header>
+    <Layouts.flash_group flash={@flash} />
 
-      <.form for={@form} id="api-key-form" phx-change="validate" phx-submit="save">
-        <.input field={@form[:name]} type="text" label="Name" />
-        <.input field={@form[:key]} type="text" label="Key" />
-        <footer>
-          <.button phx-disable-with="Saving..." variant="primary">Save Api Key</.button>
-          <.button navigate={return_path(@current_scope, @return_to, @api_key)}>Cancel</.button>
-        </footer>
-      </.form>
-    </Layouts.app>
+    <.header>
+      {@page_title}
+      <:subtitle>Use this form to manage api key records in your database.</:subtitle>
+    </.header>
+
+    <.form for={@form} id="api-key-form" phx-change="validate" phx-submit="save">
+      <.input field={@form[:name]} type="text" label="Name" />
+      <.input field={@form[:key]} type="text" label="Key" />
+      <footer>
+        <.button phx-disable-with="Saving..." variant="primary">Save Api Key</.button>
+        <.button navigate={return_path(@current_scope, @return_to, @api_key)}>Cancel</.button>
+      </footer>
+    </.form>
     """
   end
 

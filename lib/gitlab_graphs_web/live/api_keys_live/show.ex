@@ -6,25 +6,25 @@ defmodule GitlabGraphsWeb.ApiKeysLive.Show do
   @impl true
   def render(assigns) do
     ~H"""
-    <Layouts.app flash={@flash} current_scope={@current_scope}>
-      <.header>
-        Api key {@api_key.id}
-        <:subtitle>This is a api key record from your database.</:subtitle>
-        <:actions>
-          <.button navigate={~p"/api_keys"}>
-            <.icon name="hero-arrow-left" />
-          </.button>
-          <.button variant="primary" navigate={~p"/api_keys/#{@api_key}/edit?return_to=show"}>
-            <.icon name="hero-pencil-square" /> Edit api key
-          </.button>
-        </:actions>
-      </.header>
+    <Layouts.flash_group flash={@flash} />
 
-      <.list>
-        <:item title="Name">{@api_key.name}</:item>
-        <:item title="Key">{@api_key.key}</:item>
-      </.list>
-    </Layouts.app>
+    <.header>
+      Api key {@api_key.id}
+      <:subtitle>This is a api key record from your database.</:subtitle>
+      <:actions>
+        <.button navigate={~p"/api_keys"}>
+          <.icon name="hero-arrow-left" />
+        </.button>
+        <.button variant="primary" navigate={~p"/api_keys/#{@api_key}/edit?return_to=show"}>
+          <.icon name="hero-pencil-square" /> Edit api key
+        </.button>
+      </:actions>
+    </.header>
+
+    <.list>
+      <:item title="Name">{@api_key.name}</:item>
+      <:item title="Key">{@api_key.key}</:item>
+    </.list>
     """
   end
 

@@ -3,6 +3,13 @@ defmodule GitlabGraphsWeb.Router do
 
   import GitlabGraphsWeb.UserAuth
 
+  def put_path_assigns(conn, _opts) do
+    conn
+    |> assign(:path_info, conn.path_info)
+    |> assign(:path_params, conn.path_params)
+    |> assign(:request_path, conn.request_path)
+  end
+
   pipeline :browser do
     plug :accepts, ["html"]
     plug :fetch_session
@@ -11,6 +18,7 @@ defmodule GitlabGraphsWeb.Router do
     plug :protect_from_forgery
     plug :put_secure_browser_headers
     plug :fetch_current_scope_for_user
+    plug :put_path_assigns
   end
 
   pipeline :api do
