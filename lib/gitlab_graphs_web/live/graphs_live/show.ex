@@ -12,9 +12,10 @@ defmodule GitlabGraphsWeb.GraphsLive.Show do
       Graph of {@live_action}
     </.header>
 
-    <.form for={@form} phx-change="set-params" phx-submit="render">
+    <.form for={nil} phx-change="set-key" phx-submit="render">
       <.input
-        field={@form[:key]}
+        name="key"
+        value={@key && @key.id}
         type="select"
         prompt="Select an API key"
         options={options_for(@keys)}
@@ -40,18 +41,16 @@ defmodule GitlabGraphsWeb.GraphsLive.Show do
       |> assign(:page_title, "Graphs")
       |> assign(:key, nil)
       |> assign(:graph, nil)
-      |> assign(:form, to_form(%{"key" => nil}))
       |> assign(:keys, Gitlab.list_api_keys(socket.assigns.current_scope))
     }
   end
 
   @impl true
-  def handle_event("set-params", %{"key" => key_id} = params, socket) do
-    form = to_form(params)
-    key_id = (key_id && key_id != "" && key_id) || nil
+  def handle_event("set-key", %{"key" => key_id}, socket) do
+    key_id = if key_id == "", do: nil, else: key_id
     key = key_id && Gitlab.get_api_key!(socket.assigns.current_scope, key_id)
 
-    {:noreply, socket |> assign(:form, form) |> assign(:key, key)}
+    {:noreply, assign(socket, :key, key)}
   end
 
   @impl true
@@ -66,7 +65,7 @@ defmodule GitlabGraphsWeb.GraphsLive.Show do
   end
 
   defp graph_for(key) do
-    {:ok, graph_data} = Gitlab.get_graph_data(key)
+    {:ok, graph_data} = Gitlab.Graphs.get_graph_data(key)
     graph_data
   end
 end

@@ -50,8 +50,4 @@ defmodule GitlabGraphs.Gitlab do
       {:ok, api_key}
     end
   end
-
-  def get_graph_data(_key) do
-    {:ok, [:graph, :data]}
-  end
 end
