@@ -72,6 +72,9 @@ defmodule GitlabGraphsWeb.Router do
       live "/api_keys/new", ApiKeysLive.Form, :new
       live "/api_keys/:id", ApiKeysLive.Show, :show
       live "/api_keys/:id/edit", ApiKeysLive.Form, :edit
+
+      live "/graphs/jobs", GraphsLive.Show, :jobs
+      live "/graphs/commits", GraphsLive.Show, :commits
     end
 
     post "/users/update-password", UserSessionController, :update_password

@@ -83,8 +83,16 @@
               <details>
                 <summary>Graphs</summary>
                 <ul>
-                  <li><a>Commits</a></li>
-                  <li><a>Jobs</a></li>
+                  <li>
+                    <.my_link navigate={~p"/graphs/commits"} current_path={@request_path}>
+                      Commits
+                    </.my_link>
+                  </li>
+                  <li>
+                    <.my_link navigate={~p"/graphs/jobs"} current_path={@request_path}>
+                      Jobs
+                    </.my_link>
+                  </li>
                 </ul>
               </details>
             </li>
