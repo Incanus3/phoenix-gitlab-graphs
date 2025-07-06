@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" class="size-full">
   <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
@@ -7,9 +7,12 @@
     <.live_title default="GitlabGraphs" suffix=" · Phoenix Framework">
       {assigns[:page_title]}
     </.live_title>
+
     <link phx-track-static rel="stylesheet" href={~p"/assets/css/app.css"} />
+
     <script defer phx-track-static type="text/javascript" src={~p"/assets/js/app.js"}>
     </script>
+
     <script>
       (() => {
         const setTheme = (theme) => {
@@ -28,29 +31,59 @@
         window.addEventListener("phx:set-theme", ({ detail: { theme } }) => setTheme(theme));
       })();
     </script>
+
     {Application.get_env(:live_debugger, :live_debugger_tags)}
   </head>
-  <body>
-    <ul class="menu menu-horizontal w-full relative z-10 flex items-center gap-4 px-4 sm:px-6 lg:px-8 justify-end">
+
+  <body class="flex flex-col size-full">
+    <div class={[
+      "flex flex-row flex-wrap w-full justify-between items-center px-4 sm:px-6 lg:px-8",
+      "border-1 border-transparent border-b-(--color-base-300)"
+    ]}>
+      <h1 class="hidden md:inline flex items-center text-sm font-semibold leading-6">
+        Phoenix Framework
+        <small class="badge badge-warning badge-sm ml-3">
+          v{Application.spec(:phoenix, :vsn)}
+        </small>
+      </h1>
+
+      <ul class="menu menu-horizontal">
+        <%= if @current_scope do %>
+          <li class="menu-title">{@current_scope.user.email}</li>
+          <li><.link href={~p"/users/settings"}>Settings</.link></li>
+          <li><.link href={~p"/users/log-out"} method="delete">Log out</.link></li>
+        <% else %>
+          <li><.link href={~p"/users/register"}>Register</.link></li>
+          <li><.link href={~p"/users/log-in"}>Log in</.link></li>
+        <% end %>
+      </ul>
+
+      <div class="flex justify-between items-center">
+        <Layouts.theme_toggle />
+      </div>
+    </div>
+
+    <div class="size-full">
       <%= if @current_scope do %>
-        <li>
-          {@current_scope.user.email}
-        </li>
-        <li>
-          <.link href={~p"/users/settings"}>Settings</.link>
-        </li>
-        <li>
-          <.link href={~p"/users/log-out"} method="delete">Log out</.link>
-        </li>
+        <div class="flex flex-row size-full">
+          <div class={[
+            "h-full border-1 border-transparent border-r-(--color-base-300)",
+            "px-4 py-4 sm:px-6 sm:py-6 lg:px-8 lg:py-8"
+          ]}>
+            <h1 class="text-sm font-semibold leading-6">
+              Tady bude navigation menu
+            </h1>
+          </div>
+
+          <div class="flex-1 px-4 py-4 sm:px-6 sm:py-6 lg:px-8 lg:py-8">
+            {@inner_content}
+          </div>
+        </div>
       <% else %>
-        <li>
-          <.link href={~p"/users/register"}>Register</.link>
-        </li>
-        <li>
-          <.link href={~p"/users/log-in"}>Log in</.link>
-        </li>
+        <div class="flex-1 px-4 py-4 sm:px-6 sm:py-6 lg:px-8 lg:py-8">
+          {@inner_content}
+        </div>
       <% end %>
-    </ul>
-    {@inner_content}
+    </div>
   </body>
 </html>
