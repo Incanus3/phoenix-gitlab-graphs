@@ -4,6 +4,7 @@ defmodule GitlabGraphs.Gitlab.ApiKey do
 
   schema "api_keys" do
     field :name, :string
+    field :server, :string
     field :key, :string, redact: true
 
     belongs_to :user, GitlabGraphs.Accounts.User
@@ -14,8 +15,8 @@ defmodule GitlabGraphs.Gitlab.ApiKey do
   @doc false
   def changeset(key, attrs, user_scope) do
     key
-    |> cast(attrs, [:name, :key])
-    |> validate_required([:name, :key])
+    |> cast(attrs, [:name, :server, :key])
+    |> validate_required([:name, :server, :key])
     |> put_change(:user_id, user_scope.user.id)
   end
 end

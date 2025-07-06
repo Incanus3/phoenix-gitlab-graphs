@@ -23,6 +23,7 @@ defmodule GitlabGraphsWeb.ApiKeysLive.Show do
 
     <.list>
       <:item title="Name">{@api_key.name}</:item>
+      <:item title="Server">{@api_key.server}</:item>
       <:item title="Key">{@api_key.key}</:item>
     </.list>
     """

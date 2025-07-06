@@ -23,6 +23,7 @@ defmodule GitlabGraphsWeb.ApiKeysLive.Index do
       row_click={fn {_id, api_key} -> JS.navigate(~p"/api_keys/#{api_key}") end}
     >
       <:col :let={{_id, api_key}} label="Name">{api_key.name}</:col>
+      <:col :let={{_id, api_key}} label="Server">{api_key.key}</:col>
       <:col :let={{_id, api_key}} label="Key">{api_key.key}</:col>
       <:action :let={{_id, api_key}}>
         <div class="sr-only">

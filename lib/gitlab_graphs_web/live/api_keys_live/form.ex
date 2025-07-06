@@ -15,6 +15,7 @@ defmodule GitlabGraphsWeb.ApiKeysLive.Form do
 
     <.form for={@form} id="api-key-form" phx-change="validate" phx-submit="save">
       <.input field={@form[:name]} type="text" label="Name" />
+      <.input field={@form[:server]} type="text" label="Server" />
       <.input field={@form[:key]} type="text" label="Key" />
       <footer>
         <.button phx-disable-with="Saving..." variant="primary">Save Api Key</.button>
